@@ -27,7 +27,7 @@ mod:AddBoolOption("YellOnStormCloud", true, "announce")
 local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 61968)
 local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 63512)
-local timerFlashFrCD		= mod:NewCDTimer(50, 61968)
+local timerFlashFrCD		= mod:NewCDTimer(60, 61968)
 local timerAchieve			= mod:NewAchievementTimer(149, 3182, "TimerSpeedKill")
 
 mod:AddBoolOption("SetIconOnStormCloud")
