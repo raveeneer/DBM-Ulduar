@@ -31,7 +31,7 @@ local timerSurgeofDarkness		= mod:NewBuffActiveTimer(10, 62662)
 local timerNextSurgeofDarkness	= mod:NewBuffActiveTimer(62, 62662)
 local timerSaroniteVapors		= mod:NewNextTimer(30, 63322)
 local timerLifeLeech			= mod:NewTargetTimer(10, 63276)
-local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn")
+local timerHardmode				= mod:NewTimer(249, "hardmodeSpawn")
 
 mod:AddBoolOption("YellOnLifeLeech", true, "announce")
 mod:AddBoolOption("YellOnShadowCrash", true, "announce")
