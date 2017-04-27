@@ -110,7 +110,7 @@ function mod:Flames()
 		self:ScheduleMethod(18, "Flames")
 	else
 		timerNextFlames:Start()
-		self:ScheduleMethod(27.5, "Flames")
+		self:ScheduleMethod(30, "Flames")
 	end
 end
 
