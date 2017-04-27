@@ -307,8 +307,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerFlameSuppressant:Start()
 		enrage:Stop()
 		hardmode = true
-		timerNextFlames:Start(6.5)
-		self:ScheduleMethod(6.5, "Flames")
+		timerNextFlames:Start(7)
+		self:ScheduleMethod(7, "Flames")
 	end
 end
 
