@@ -318,7 +318,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		hardmode = true
 		timerNextFlames:Start(7)
 		self:ScheduleMethod(7, "Flames")
-		warnFlamesSoon:Schedule(2)
+		--warnFlamesSoon:Schedule(2)
 		warnFlamesIn5Sec:Schedule(2)
 	end
 end
