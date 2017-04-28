@@ -375,7 +375,8 @@ L:SetGeneralLocalization{
 L:SetWarningLocalization{
 	MagneticCore		= ">%s< has Magnetic Core",
 	WarningShockBlast	= "Shock Blast - Run away",
-	WarnBombSpawn		= "Bomb Bot spawned"
+	WarnBombSpawn		= "Bomb Bot spawned",
+	WarningFlamesIn5Sec = "Flames in 5 sec."
 }
 
 L:SetTimerLocalization{

@@ -24,8 +24,11 @@ local shellWarn					= mod:NewTargetAnnounce(63666, 2)
 local lootannounce				= mod:NewAnnounce("MagneticCore", 1)
 local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3)
 local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
-local warnFlamesSoon			= mod:NewSoonAnnounce(64566, 3) --added by raf
 
+-- added by raf --
+local warnFlamesSoon			= mod:NewSoonAnnounce(64566, 1) 
+local warnFlamesIn5Sec			= mod:NewSpecialWarning("WarningFlamesIn5Sec", 3)
+-- added by raf --
 
 local warnShockBlast			= mod:NewSpecialWarning("WarningShockBlast", nil, false)
 mod:AddBoolOption("ShockBlastWarningInP1", mod:IsMelee(), "announce")
@@ -113,7 +116,9 @@ function mod:Flames()
 	else
 		timerNextFlames:Start()
 		self:ScheduleMethod(30, "Flames")
-		warnFlamesSoon:Schedule(25)
+		warnFlamesSoon:Schedule(20)
+		warnFlamesIn5Sec:Schedule(25) 
+
 
 	end
 end
@@ -313,7 +318,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		hardmode = true
 		timerNextFlames:Start(7)
 		self:ScheduleMethod(7, "Flames")
-		warnFlamesSoon:Schedule(2-delay)
+		warnFlamesSoon:Schedule(2)
+		warnFlamesIn5Sec:Schedule(2)
 	end
 end
 
