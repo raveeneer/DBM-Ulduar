@@ -111,8 +111,10 @@ end
 
 function mod:Flames()
 	if phase == 4 then
-		timerNextFlames:Start(18)
-		self:ScheduleMethod(18, "Flames")
+		timerNextFlames:Start(30)
+		self:ScheduleMethod(30, "Flames")
+		warnFlamesSoon:Schedule(20)
+		warnFlamesIn5Sec:Schedule(25) 
 	else
 		timerNextFlames:Start()
 		self:ScheduleMethod(30, "Flames")
