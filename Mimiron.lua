@@ -37,9 +37,9 @@ local warnDarkGlare				= mod:NewSpecialWarningSpell(63293)
 
 local enrage 					= mod:NewBerserkTimer(900)
 local timerHardmode				= mod:NewTimer(480, "TimerHardmode", 64582)
-local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2") -- 5 sec longer
+local timerP1toP2				= mod:NewTimer(48, "TimeToPhase2") 
 local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3")
-local timerP3toP4				= mod:NewTimer(25, "TimeToPhase4")
+local timerP3toP4				= mod:NewTimer(30, "TimeToPhase4")
 local timerProximityMines		= mod:NewNextTimer(35, 63027)
 local timerShockBlast			= mod:NewCastTimer(63631)
 local timerSpinUp				= mod:NewCastTimer(4, 63414)
