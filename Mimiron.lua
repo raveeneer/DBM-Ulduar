@@ -53,6 +53,7 @@ local timerNextFlameSuppressant	= mod:NewNextTimer(10, 65192)
 local timerNextFlames			= mod:NewNextTimer(30, 64566)
 local timerNextFrostBomb        = mod:NewNextTimer(45, 64623)
 local timerBombExplosion		= mod:NewCastTimer(12.5, 65333)
+local timerBombBotSpawn			= mod:NewNextTimer(15, 63811) -- raf
 
 mod:AddBoolOption("PlaySoundOnShockBlast", isMelee)
 mod:AddBoolOption("PlaySoundOnDarkGlare", true)
@@ -128,6 +129,7 @@ end
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(63811) then -- Bomb Bot
 		warnBombSpawn:Show()
+		timerBombBotSpawn:Start()
 	end
 end
 
@@ -169,6 +171,11 @@ function mod:SPELL_CAST_START(args)
 		timerBombExplosion:Start()
 		timerNextFrostBomb:Start()
 	end
+	if args:IsSpellID(63811) then  -- raf 
+		warnBombSpawn:Show()		-- need to be tested due to hidden cast time of 63811 spell
+		timerBombBotSpawn:Start()
+	end
+
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -247,6 +254,7 @@ function mod:NextPhase()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
 		timerP2toP3:Start()
+		timerBombBotSpawn:Start(42)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)
