@@ -37,7 +37,7 @@ local warnDarkGlare				= mod:NewSpecialWarningSpell(63293)
 
 local enrage 					= mod:NewBerserkTimer(900)
 local timerHardmode				= mod:NewTimer(480, "TimerHardmode", 64582)
-local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2")
+local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2") -- 5 sec longer
 local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3")
 local timerP3toP4				= mod:NewTimer(25, "TimeToPhase4")
 local timerProximityMines		= mod:NewNextTimer(35, 63027)
@@ -51,7 +51,7 @@ local timerShell				= mod:NewBuffActiveTimer(6, 63666)
 local timerFlameSuppressant		= mod:NewCastTimer(80, 64570)
 local timerNextFlameSuppressant	= mod:NewNextTimer(10, 65192)
 local timerNextFlames			= mod:NewNextTimer(30, 64566)
-local timerNextFrostBomb        = mod:NewNextTimer(30, 64623)
+local timerNextFrostBomb        = mod:NewNextTimer(45, 64623)
 local timerBombExplosion		= mod:NewCastTimer(12.5, 65333)
 
 mod:AddBoolOption("PlaySoundOnShockBlast", isMelee)
@@ -236,7 +236,7 @@ function mod:NextPhase()
 			DBM.RangeCheck:Hide()
 		end
 		if hardmode then
-            timerNextFrostBomb:Start(114)
+            timerNextFrostBomb:Start(52)
         end
 
 	elseif phase == 3 then
@@ -270,7 +270,7 @@ function mod:NextPhase()
 		if hardmode then
 			self:UnscheduleMethod("Flames")
 			self:Flames()
-            timerNextFrostBomb:Start(73)
+            timerNextFrostBomb:Start(33)
         end
 	end
 end
