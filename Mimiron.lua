@@ -52,7 +52,7 @@ local timerFlameSuppressant		= mod:NewCastTimer(80, 64570)
 local timerNextFlameSuppressant	= mod:NewNextTimer(10, 65192)
 local timerNextFlames			= mod:NewNextTimer(30, 64566)
 local timerNextFrostBomb        = mod:NewNextTimer(30, 64623)
-local timerBombExplosion		= mod:NewCastTimer(15, 65333)
+local timerBombExplosion		= mod:NewCastTimer(12.5, 65333)
 
 mod:AddBoolOption("PlaySoundOnShockBlast", isMelee)
 mod:AddBoolOption("PlaySoundOnDarkGlare", true)
