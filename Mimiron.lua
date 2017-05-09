@@ -28,6 +28,7 @@ local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 -- added by raf --
 local warnFlamesSoon			= mod:NewSoonAnnounce(64566, 1) 
 local warnFlamesIn5Sec			= mod:NewSpecialWarning("WarningFlamesIn5Sec", 3)
+local warnPrimeCore 			= mod:NewSpecialWarning("SpecialMessagePrimeCore", 3)
 -- added by raf --
 
 local warnShockBlast			= mod:NewSpecialWarning("WarningShockBlast", nil, false)
@@ -320,7 +321,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif (msg == L.YellPhase4 or msg:find(L.YellPhase4)) then
 		--DBM:AddMsg("ALPHA: yell detect phase3, syncing to clients")
 		self:SendSync("Phase4") -- SPELL_AURA_REMOVED detection might fail in phase 3...there are simply not enough debuffs on him
-
+	elseif (msg == L.YellKilled or msg:find(L.YellKilled)) then
+		enrage:Stop()
+		timerHardmode:Stop()
+		timerNextFlames:Stop()
+		self:UnscheduleMethod("Flames")
+		timerNextFrostBomb:Stop()
+		timerNextDarkGlare:Stop()
+		warnPrimeCore:Show()
 	elseif (msg == L.YellHardPull or msg:find(L.YellHardPull)) then
 		timerHardmode:Start()
 		timerFlameSuppressant:Start()

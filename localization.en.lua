@@ -376,7 +376,8 @@ L:SetWarningLocalization{
 	MagneticCore		= ">%s< has Magnetic Core",
 	WarningShockBlast	= "Shock Blast - Run away",
 	WarnBombSpawn		= "Bomb Bot spawned",
-	WarningFlamesIn5Sec = "Flames in 5 sec."
+	WarningFlamesIn5Sec = "Flames in 5 sec.",
+	SpecialMessagePrimeCore = "Zaskocze was..."
 }
 
 L:SetTimerLocalization{
@@ -413,6 +414,7 @@ L:SetMiscLocalization{
 	YellPhase2		= "WONDERFUL! Positively marvelous results! Hull integrity at 98.9 percent! Barely a dent! Moving right along.",
 	YellPhase3		= "Thank you, friends! Your efforts have yielded some fantastic data! Now, where did I put-- oh, there it is.",
 	YellPhase4		= "Preliminary testing phase complete. Now comes the true test!",
+	YellKilled		= "It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison. overriding my primary directive. All systems seem to be functional now. Clear.",
 	LootMsg			= "([^%s]+).*Hitem:(%d+)"
 }
 
