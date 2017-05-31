@@ -47,6 +47,7 @@ local timerSpinUp				= mod:NewCastTimer(4, 63414)
 local timerDarkGlareCast		= mod:NewCastTimer(10, 63274)
 local timerNextDarkGlare		= mod:NewNextTimer(41, 63274)
 local timerNextShockblast		= mod:NewNextTimer(30, 63631)
+local timerFirstPlasmaBlast		= mod:NewNextTimer(15, 64529)
 local timerPlasmaBlastCD		= mod:NewCDTimer(45, 64529)
 local timerShell				= mod:NewBuffActiveTimer(6, 63666)
 local timerFlameSuppressant		= mod:NewCastTimer(80, 64570)
@@ -88,7 +89,7 @@ function mod:OnCombatStart(delay)
 	napalmShellIcon = 7
 	table.wipe(napalmShellTargets)
 	self:NextPhase()
-	timerPlasmaBlastCD:Start(23-delay)
+	timerPlasmaBlastCD:Start(15-delay)
 	if DBM:GetRaidRank() == 2 then
 		lootmethod, _, masterlooterRaidID = GetLootMethod()
 	end
@@ -122,8 +123,6 @@ function mod:Flames()
 		self:ScheduleMethod(30, "Flames")
 		warnFlamesSoon:Schedule(20)
 		warnFlamesIn5Sec:Schedule(25) 
-
-
 	end
 end
 
@@ -338,6 +337,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:ScheduleMethod(7, "Flames")
 		--warnFlamesSoon:Schedule(2)
 		warnFlamesIn5Sec:Schedule(2)
+		timerFirstPlasmaBlast:Start(15)
+		timerNextShockblast:Start(20)
 	end
 end
 
