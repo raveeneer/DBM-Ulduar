@@ -47,10 +47,9 @@ local timerSpinUp				= mod:NewCastTimer(4, 63414)
 local timerDarkGlareCast		= mod:NewCastTimer(10, 63274)
 local timerNextDarkGlare		= mod:NewNextTimer(41, 63274)
 local timerNextShockblast		= mod:NewNextTimer(30, 63631)
-local timerFirstPlasmaBlast		= mod:NewNextTimer(15, 64529)
 local timerPlasmaBlastCD		= mod:NewCDTimer(45, 64529)
 local timerShell				= mod:NewBuffActiveTimer(6, 63666)
-local timerFlameSuppressant		= mod:NewCastTimer(80, 64570)
+local timerFlameSuppressant		= mod:NewCastTimer(75, 64570)
 local timerNextFlameSuppressant	= mod:NewNextTimer(10, 65192)
 local timerNextFlames			= mod:NewNextTimer(30, 64566)
 local timerNextFrostBomb        = mod:NewNextTimer(30, 64623)
@@ -89,7 +88,7 @@ function mod:OnCombatStart(delay)
 	napalmShellIcon = 7
 	table.wipe(napalmShellTargets)
 	self:NextPhase()
-	timerPlasmaBlastCD:Start(15-delay)
+	timerPlasmaBlastCD:Start(30-delay) 
 	if DBM:GetRaidRank() == 2 then
 		lootmethod, _, masterlooterRaidID = GetLootMethod()
 	end
@@ -126,10 +125,17 @@ function mod:Flames()
 	end
 end
 
+function mod:BombBot()
+	if phase == 3 then
+		timerBombBotSpawn:Start()
+		warnBombSpawn:Schedule(12)
+		self:ScheduleMethod(15, "BombBot")
+	end
+end
+
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(63811) then -- Bomb Bot
 		warnBombSpawn:Show()
-		timerBombBotSpawn:Start()
 	end
 end
 
@@ -171,11 +177,6 @@ function mod:SPELL_CAST_START(args)
 		timerBombExplosion:Start()
 		timerNextFrostBomb:Start()
 	end
-	if args:IsSpellID(63811) then  -- raf 
-		warnBombSpawn:Show()		-- need to be tested due to hidden cast time of 63811 spell
-		timerBombBotSpawn:Start()
-	end
-
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -254,7 +255,9 @@ function mod:NextPhase()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
 		timerP2toP3:Start()
+		warnBombSpawn:Schedule(39)
 		timerBombBotSpawn:Start(42)
+		self:ScheduleMethod(42, "BombBot")
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)
@@ -320,6 +323,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif (msg == L.YellPhase4 or msg:find(L.YellPhase4)) then
 		--DBM:AddMsg("ALPHA: yell detect phase3, syncing to clients")
 		self:SendSync("Phase4") -- SPELL_AURA_REMOVED detection might fail in phase 3...there are simply not enough debuffs on him
+		self:UnscheduleMethod("BombBot")
 	elseif (msg == L.YellKilled or msg:find(L.YellKilled)) then
 		enrage:Stop()
 		timerHardmode:Stop()
@@ -329,16 +333,15 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerNextDarkGlare:Stop()
 		warnPrimeCore:Show()
 	elseif (msg == L.YellHardPull or msg:find(L.YellHardPull)) then
-		timerHardmode:Start()
-		timerFlameSuppressant:Start()
 		enrage:Stop()
+		timerHardmode:Start()
 		hardmode = true
+		timerFlameSuppressant:Start()
 		timerNextFlames:Start(7)
 		self:ScheduleMethod(7, "Flames")
 		--warnFlamesSoon:Schedule(2)
 		warnFlamesIn5Sec:Schedule(2)
-		timerFirstPlasmaBlast:Start(15)
-		timerNextShockblast:Start(20)
+		timerNextShockblast:Start(37)
 	end
 end
 
