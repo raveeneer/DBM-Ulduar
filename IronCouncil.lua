@@ -10,7 +10,8 @@ mod:RegisterCombat("combat", 32867, 32927, 32857)
 mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_AURA_APPLIED",
-	"SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 mod:AddBoolOption("HealthFrame", true)
@@ -54,9 +55,8 @@ local warnRuneofDeath			= mod:NewSpellAnnounce(63490, 2)
 local warnShieldofRunes			= mod:NewSpellAnnounce(63489, 2)
 local warnRuneofSummoning		= mod:NewSpellAnnounce(62273, 3)
 local specwarnRuneofDeath		= mod:NewSpecialWarningMove(63490)
-local timerRuneofDeathDura		= mod:NewNextTimer(30, 63490)
-local timerRuneofPower			= mod:NewCDTimer(30, 61974)
-local timerRuneofDeath			= mod:NewCDTimer(30, 63490)
+local timerRuneofPower			= mod:NewNextTimer(60, 61974)
+local timerRuneofDeath			= mod:NewNextTimer(35, 63490)
 mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
 
 local enrageTimer				= mod:NewBerserkTimer(900)
@@ -66,8 +66,16 @@ local disruptIcon = 7
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start()
+	timerRuneofDeath:Start()
+	timerRuneofPower:Start(30)
+	self:ScheduleMethod(30, "RuneOfPower")
 	table.wipe(disruptTargets)
 	disruptIcon = 7
+end
+
+function mod:RuneOfPower()
+	timerRuneofPower:Start()
+	self:ScheduleMethod(60, "RuneOfPower")
 end
 
 function mod:RuneTarget()
@@ -102,7 +110,6 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(63490, 62269) then		-- Rune of Death
 		warnRuneofDeath:Show()
-		timerRuneofDeathDura:Start()
 	elseif args:IsSpellID(64321, 61974) then	-- Rune of Power
 		self:ScheduleMethod(0.1, "RuneTarget")
 		timerRuneofPower:Start()
@@ -157,5 +164,15 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		self:Unschedule(warnStaticDisruptionTargets)
 		self:Schedule(0.3, warnStaticDisruptionTargets)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.YellRuneOfDeath or msg:find(L.YellRuneOfDeath)) then
+		timerRuneofDeath:Start()
+	elseif (msg == L.YellRunemasterMolgeimDied or msg:find(L.YellRunemasterMolgeimDied)) then
+		timerRuneofDeath:Stop()
+		timerRuneofPower:Stop()
+		self:UnscheduleMethod("RuneOfPower")
 	end
 end

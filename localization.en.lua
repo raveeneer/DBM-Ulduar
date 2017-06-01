@@ -142,7 +142,9 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	Steelbreaker		= "Steelbreaker",
 	RunemasterMolgeim	= "Runemaster Molgeim",
-	StormcallerBrundir 	= "Stormcaller Brundir"
+	StormcallerBrundir 	= "Stormcaller Brundir",
+	YellRuneOfDeath		= "Decipher this!",
+	YellRunemasterMolgeimDied = "What have you gained from my defeat? You are no less doomed, mortals!"
 }
 
 ----------------------------
