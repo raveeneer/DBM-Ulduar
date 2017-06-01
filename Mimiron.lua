@@ -22,7 +22,7 @@ mod:RegisterEvents(
 local blastWarn					= mod:NewTargetAnnounce(64529, 4)
 local shellWarn					= mod:NewTargetAnnounce(63666, 2)
 local lootannounce				= mod:NewAnnounce("MagneticCore", 1)
-local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3)
+--local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3)
 local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 
 -- added by raf --
@@ -128,14 +128,14 @@ end
 function mod:BombBot()
 	if phase == 3 then
 		timerBombBotSpawn:Start()
-		warnBombSpawn:Schedule(12)
+		--warnBombSpawn:Schedule(12)
 		self:ScheduleMethod(15, "BombBot")
 	end
 end
 
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(63811) then -- Bomb Bot
-		warnBombSpawn:Show()
+		--warnBombSpawn:Show()
 	end
 end
 
@@ -255,9 +255,9 @@ function mod:NextPhase()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
 		timerP2toP3:Start()
-		warnBombSpawn:Schedule(39)
-		timerBombBotSpawn:Start(42)
-		self:ScheduleMethod(42, "BombBot")
+		--warnBombSpawn:Schedule(38)
+		timerBombBotSpawn:Start(41)
+		self:ScheduleMethod(41, "BombBot")
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)

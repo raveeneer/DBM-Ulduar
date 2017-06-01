@@ -65,7 +65,7 @@ local disruptTargets = {}
 local disruptIcon = 7
 
 function mod:OnCombatStart(delay)
-	enrageTimer:Start(-delay)
+	enrageTimer:Start()
 	table.wipe(disruptTargets)
 	disruptIcon = 7
 end
