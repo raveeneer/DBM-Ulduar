@@ -9,7 +9,7 @@ mod:RegisterCombat("combat", 32930, 32933, 32934)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_APPLIED_DOSE",
+	"SPELL_AURA_APPLIED_DOSE"
 	"SPELL_AURA_REMOVED",
 	"SPELL_DAMAGE",
 	"CHAT_MSG_RAID_BOSS_WHISPER",
@@ -30,6 +30,7 @@ local specWarnCrunchArmor2		= mod:NewSpecialWarningStack(64002, false, 2)
 local specWarnEyebeam			= mod:NewSpecialWarningYou(63346)
 
 local timerCrunch10             = mod:NewTargetTimer(6, 63355)
+local timerNextOverheadSmash	= mod:NewCDTimer(15, 64003)
 local timerNextShockwave		= mod:NewCDTimer(18, 63982)
 local timerRespawnLeftArm		= mod:NewTimer(40, "timerLeftArm")
 local timerRespawnRightArm		= mod:NewTimer(40, "timerRightArm")
@@ -43,6 +44,17 @@ mod:AddBoolOption("SetIconOnGripTarget", true)
 mod:AddBoolOption("PlaySoundOnEyebeam", true)
 mod:AddBoolOption("SetIconOnEyebeamTarget", true)
 mod:AddBoolOption("YellOnBeam", true, "announce")
+
+function mod:OnCombatStart(delay)
+	timerNextOverheadSmash:Start(8)
+	timerNextOverheadSmash:Schedule(8)
+	self:ScheduleMethod(23, "OverheadSmash")
+end
+
+function mod:OverheadSmash()
+	timerNextOverheadSmash:Start(25)
+	self:ScheduleMethod(25, "OverheadSmash")
+end
 
 function mod:UNIT_DIED(args)
 	if self:GetCIDFromGUID(args.destGUID) == 32934 then 		-- right arm
