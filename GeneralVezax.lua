@@ -43,7 +43,11 @@ mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without sync
 
 function mod:OnCombatStart(delay)
 	timerEnrage:Start(-delay)
-	timerHardmode:Start(-delay)
+	if mod:IsDifficulty("heroic10") then
+		timerHardmode:Start(189)
+	else
+		timerHardmode:Start(-delay)
+	end
 	timerNextSurgeofDarkness:Start(-delay)
 end
 
