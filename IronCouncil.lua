@@ -32,7 +32,7 @@ local timerLightningWhirl		= mod:NewCastTimer(5, 63483)
 local specwarnLightningTendrils	= mod:NewSpecialWarningRun(63486)
 local timerLightningTendrils	= mod:NewBuffActiveTimer(27, 63486)
 local specwarnOverload			= mod:NewSpecialWarningRun(63481) 
-mod:AddBoolOption("AlwaysWarnOnOverload", false, "announce")
+mod:AddBoolOption("AlwaysWarnOnOverload", true, "announce")
 mod:AddBoolOption("PlaySoundOnOverload", true)
 mod:AddBoolOption("PlaySoundLightningTendrils", true)
 
