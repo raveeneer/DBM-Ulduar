@@ -52,8 +52,8 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OverheadSmash()
-	timerNextOverheadSmash:Start(25)
-	self:ScheduleMethod(25, "OverheadSmash")
+	timerNextOverheadSmash:Start(28)
+	self:ScheduleMethod(28, "OverheadSmash")
 end
 
 function mod:UNIT_DIED(args)
