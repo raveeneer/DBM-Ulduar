@@ -35,6 +35,11 @@ mod:AddBoolOption("SetIconOnStormCloud")
 function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
+	if mod:IsDifficulty("heroic10") then
+		timerAchieve:Start(179)
+	else
+		timerAchieve:Start()
+	end
 	timerFlashFrCD:Start(-delay)
 end
 
