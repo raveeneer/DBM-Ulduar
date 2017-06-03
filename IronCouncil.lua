@@ -5,7 +5,10 @@ mod:SetRevision(("$Revision: 4154 $"):sub(12, -3))
 mod:SetCreatureID(32927)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
-mod:RegisterCombat("combat", 32867, 32927, 32857)
+--mod:RegisterCombat("combat", 32867, 32927, 32857)
+mod:RegisterCombat("yell", L.YellPull1)
+mod:RegisterCombat("yell", L.YellPull2)
+mod:RegisterCombat("yell", L.YellPull3)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -171,6 +174,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L.YellRuneOfDeath or msg:find(L.YellRuneOfDeath)) then
 		timerRuneofDeath:Start()
 	elseif (msg == L.YellRunemasterMolgeimDied or msg:find(L.YellRunemasterMolgeimDied)) then
+		timerRuneofDeath:Stop()
+		timerRuneofPower:Stop()
+		self:UnscheduleMethod("RuneOfPower")
+	elseif (msg == L.YellRunemasterMolgeimDied2 or msg:find(L.YellRunemasterMolgeimDied2)) then
 		timerRuneofDeath:Stop()
 		timerRuneofPower:Stop()
 		self:UnscheduleMethod("RuneOfPower")
