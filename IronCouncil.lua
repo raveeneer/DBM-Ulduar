@@ -69,7 +69,6 @@ local disruptIcon = 7
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start()
-	timerRuneofDeath:Start()
 	timerRuneofPower:Start(30)
 	self:ScheduleMethod(30, "RuneOfPower")
 	table.wipe(disruptTargets)
@@ -172,6 +171,10 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L.YellRuneOfDeath or msg:find(L.YellRuneOfDeath)) then
+		timerRuneofDeath:Start()
+	elseif (msg == L.YellStormcallerBrundirDied or msg:find(L.YellStormcallerBrundirDied)) then --register first RoD timer
+		timerRuneofDeath:Start()
+	elseif (msg == L.YellStormcallerBrundirDied2 or msg:find(L.YellStormcallerBrundirDied2)) then --register first RoD timer
 		timerRuneofDeath:Start()
 	elseif (msg == L.YellRunemasterMolgeimDied or msg:find(L.YellRunemasterMolgeimDied)) then
 		timerRuneofDeath:Stop()

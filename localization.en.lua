@@ -148,7 +148,9 @@ L:SetMiscLocalization{
 	YellPull3			= "You will not defeat the Assembly of Iron so easily, invaders!",
 	YellRuneOfDeath		= "Decipher this!",
 	YellRunemasterMolgeimDied = "What have you gained from my defeat? You are no less doomed, mortals!",
-	YellRunemasterMolgeimDied2 = "The legacy of storms shall not be undone."
+	YellRunemasterMolgeimDied2 = "The legacy of storms shall not be undone.",
+	YellStormcallerBrundirDied = "The power of the storm lives on...",
+	YellStormcallerBrundirDied2 = "You rush headlong into the maw of madness!"
 }
 
 ----------------------------
