@@ -112,17 +112,10 @@ function mod:OnCombatEnd()
 end
 
 function mod:Flames()
-	if phase == 4 then
 		timerNextFlames:Start()
 		self:ScheduleMethod(30, "Flames")
 		warnFlamesSoon:Schedule(20)
 		warnFlamesIn5Sec:Schedule(25) 
-	else
-		timerNextFlames:Start()
-		self:ScheduleMethod(30, "Flames")
-		warnFlamesSoon:Schedule(20)
-		warnFlamesIn5Sec:Schedule(25) 
-	end
 end
 
 function mod:BombBot()
@@ -279,8 +272,6 @@ function mod:NextPhase()
 			DBM.BossHealth:AddBoss(33432, L.MobPhase1)
 		end
 		if hardmode then
-			self:UnscheduleMethod("Flames")
-			self:Flames()
             timerNextFrostBomb:Start(33)
         end
 	end
