@@ -477,7 +477,7 @@ L:SetMiscLocalization{
 	YellPull 			= "The time to strike at the head of the beast will soon be upon us! Focus your anger and hatred on his minions!",
 	YellPhase2	 		= "I am the lucid dream.",
 	Sara 				= "Sara",
-	WarningYellSqueeze	= "NAPIERDALAC Constrictora!"
+	WarningYellSqueeze	= "Squeeze on me! Help me!"
 }
 
 L:SetWarningLocalization{
