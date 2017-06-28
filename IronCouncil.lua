@@ -61,6 +61,7 @@ local specwarnRuneofDeath		= mod:NewSpecialWarningMove(63490)
 local timerRuneofPower			= mod:NewNextTimer(60, 61974)
 local timerRuneofDeath			= mod:NewNextTimer(35, 63490)
 local timerRuneofDeathCD		= mod:NewCDTimer(35, 63490)
+local warnRuneofDeathIn10Sec	= mod:NewSpecialWarning("WarningRuneofDeathIn10Sec", 3)
 mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
 
 local enrageTimer				= mod:NewBerserkTimer(900)
@@ -173,18 +174,23 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L.YellRuneOfDeath or msg:find(L.YellRuneOfDeath)) then
 		timerRuneofDeathCD:Start()
+		warnRuneofDeathIn10Sec:Schedule(25)
 	elseif (msg == L.YellStormcallerBrundirDied or msg:find(L.YellStormcallerBrundirDied)) then --register first RoD timer
 		timerRuneofDeath:Start()
+		warnRuneofDeathIn10Sec:Schedule(25)
 	elseif (msg == L.YellStormcallerBrundirDied2 or msg:find(L.YellStormcallerBrundirDied2)) then --register first RoD timer
 		timerRuneofDeath:Start()
+		warnRuneofDeathIn10Sec:Schedule(25)
 	elseif (msg == L.YellRunemasterMolgeimDied or msg:find(L.YellRunemasterMolgeimDied)) then
 		timerRuneofDeath:Stop()
 		timerRuneofDeathCD:Stop()
+		warnRuneofDeathIn10Sec:Unschedule()
 		timerRuneofPower:Stop()
 		self:UnscheduleMethod("RuneOfPower")
 	elseif (msg == L.YellRunemasterMolgeimDied2 or msg:find(L.YellRunemasterMolgeimDied2)) then
 		timerRuneofDeath:Stop()
 		timerRuneofDeathCD:Stop()
+		warnRuneofDeathIn10Sec:Unschedule()
 		timerRuneofPower:Stop()
 		self:UnscheduleMethod("RuneOfPower")
 	end

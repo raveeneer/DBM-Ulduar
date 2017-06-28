@@ -125,6 +125,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
+	WarningRuneofDeathIn10Sec = "RoD in 10 sec."
 }
 
 L:SetTimerLocalization{
