@@ -75,7 +75,6 @@ function mod:startTimers()
 	announcePreBigBang:Schedule(80)
 	timerCDCosmicSmash:Start()
 	timerNextCollapsingStar:Start()
-	timerNextPhasePunch:Start(15.5)
 end
 
 function mod:SPELL_CAST_START(args)
