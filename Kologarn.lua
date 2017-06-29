@@ -13,7 +13,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED",
 	"SPELL_DAMAGE",
 	"CHAT_MSG_RAID_BOSS_WHISPER",
-	"UNIT_DIED"
+	"UNIT_DIED",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 mod:SetBossHealthInfo(
@@ -31,9 +32,9 @@ local specWarnEyebeam			= mod:NewSpecialWarningYou(63346)
 
 local timerCrunch10             = mod:NewTargetTimer(6, 63355)
 local timerNextOverheadSmash	= mod:NewCDTimer(15, 64003)
-local timerNextShockwave		= mod:NewCDTimer(18, 63982)
-local timerRespawnLeftArm		= mod:NewTimer(40, "timerLeftArm")
-local timerRespawnRightArm		= mod:NewTimer(40, "timerRightArm")
+local timerNextShockwave		= mod:NewCDTimer(30, 63982)
+local timerRespawnLeftArm		= mod:NewTimer(45, "timerLeftArm")
+local timerRespawnRightArm		= mod:NewTimer(45, "timerRightArm")
 local timerTimeForDisarmed		= mod:NewTimer(10, "achievementDisarmed")	-- 10 HC / 12 nonHC
 
 -- 5/23 00:33:48.648  SPELL_AURA_APPLIED,0x0000000000000000,nil,0x80000000,0x0480000001860FAC,"Hâzzad",0x4000512,63355,"Crunch Armor",0x1,DEBUFF
@@ -146,4 +147,15 @@ function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(64290, 64292) then
 		self:SetIcon(args.destName, 0)
     end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.YellEncounterStart or msg:find(L.YellEncounterStart)) then --timer for first Shockwave
+		timerNextShockwave:Start(18)
+	elseif (msg == L.YellLeftArmDies or msg:find(L.YellLeftArmDies)) then  --left arm dies
+		timerNextShockwave:Stop()
+		timerRespawnLeftArm:Start()
+	elseif (msg == L.YellRightArmDies or msg:find(L.YellRightArmDies)) then --right arm dies
+		timerRespawnRightArm:Start()
+	end
 end

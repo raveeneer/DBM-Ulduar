@@ -225,6 +225,9 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	Yell_Trigger_arm_left	= "Just a scratch!",
 	Yell_Trigger_arm_right	= "Only a flesh wound!",
+	YellEncounterStart		= "None shall pass!",
+	YellLeftArmDies			= "Just a scratch!",
+	YellRightArmDies		= "Only a flesh wound!",
 	Health_Body				= "Kologarn Body",
 	Health_Right_Arm		= "Right Arm",
 	Health_Left_Arm			= "Left Arm",
