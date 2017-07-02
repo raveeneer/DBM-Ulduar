@@ -186,12 +186,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerRuneofDeathCD:Stop()
 		warnRuneofDeathIn10Sec:Unschedule()
 		timerRuneofPower:Stop()
-		self:UnscheduleMethod("RuneOfPower")
 	elseif (msg == L.YellRunemasterMolgeimDied2 or msg:find(L.YellRunemasterMolgeimDied2)) then
 		timerRuneofDeath:Stop()
 		timerRuneofDeathCD:Stop()
 		warnRuneofDeathIn10Sec:Unschedule()
 		timerRuneofPower:Stop()
-		self:UnscheduleMethod("RuneOfPower")
 	end
 end
