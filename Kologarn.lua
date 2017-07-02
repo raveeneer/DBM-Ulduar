@@ -148,17 +148,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif (msg == L.YellLeftArmDies or msg:find(L.YellLeftArmDies)) then  --left arm dies
 		timerNextShockwave:Stop()
 		timerTimeForDisarmed:Start()
-		if mod:IsDifficulty("heroic10") then
-			timerRespawnLeftArm:Start(45)
-		else
-			timerRespawnLeftArm:Start()
-		end
+		timerRespawnLeftArm:Start()
 	elseif (msg == L.YellRightArmDies or msg:find(L.YellRightArmDies)) then --right arm dies
 		timerTimeForDisarmed:Start()
-		if mod:IsDifficulty("heroic10") then
-			timerRespawnRightArm:Start(65)
-		else
-			timerRespawnRightArm:Start()
-		end
+		timerRespawnRightArm:Start()
 	end
 end
