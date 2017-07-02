@@ -53,7 +53,7 @@ local timerEmpower					= mod:NewCDTimer(46, 64465)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64465)
 local timerMadness 					= mod:NewCastTimer(60, 64059)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 64189)
-local timerNextDeafeningRoar		= mod:NewNextTimer(30, 64189)
+local timerNextDeafeningRoar		= mod:NewNextTimer(50, 64189)
 local timerAchieve					= mod:NewAchievementTimer(420, 3012, "TimerSpeedKill")
 
 mod:AddBoolOption("ShowSaraHealth")
@@ -107,7 +107,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnMadnessOutNow:Schedule(55)
 	elseif args:IsSpellID(64189) then		--Deafening Roar
 		timerNextDeafeningRoar:Start()
-		warnDeafeningRoarSoon:Schedule(55)
+		warnDeafeningRoarSoon:Schedule(45)
 		timerCastDeafeningRoar:Start()
 		specWarnDeafeningRoar:Show()
 	elseif args:IsSpellID(63138) then		--Sara's Fervor
@@ -231,7 +231,7 @@ function mod:OnSync(msg)
         timerEmpower:Start()
         warnEmpowerSoon:Schedule(40)	
 		warnBrainPortalSoon:Cancel()
-		timerNextDeafeningRoar:Start(30)
-		warnDeafeningRoarSoon:Schedule(25)
+		timerNextDeafeningRoar:Start(50)
+		warnDeafeningRoarSoon:Schedule(45)
 	end
 end
