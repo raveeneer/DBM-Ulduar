@@ -40,13 +40,6 @@ local timerSimulKill        = mod:NewTimer(12, "TimerSimulKill")
 local timerFury             = mod:NewTargetTimer(10, 63571)
 local timerTremorCD         = mod:NewCDTimer(28, 62859)
 
--- Dravun's edit --
-local timerLifebinder       = mod:NewTimer(45, "Eonar's Gift")
-local timerAdds             = mod:NewTimer(60, "Next Wave")
---local timerBombs          = mod:NewTimer(18, "Bombs")
-local iWave                 = 0
--- Dravun's edit --
-
 mod:AddBoolOption("HealthFrame", true)
 mod:AddBoolOption("PlaySoundOnFury")
 
@@ -59,9 +52,6 @@ local iconId        = 6
 function mod:OnCombatStart(delay)
     enrage:Start()
     table.wipe(adds)
-    iWave = 0
-    timerAdds:Start(10)
-    self:ScheduleMethod(30, "Lifebinder")
 end
 
 function mod:OnCombatEnd(wipe)
@@ -78,13 +68,6 @@ local function showRootWarning()
     table.wipe(rootedPlayers)
 end
 
--- Dravun's edit
-function mod:Lifebinder()
-    timerLifebinder:Start()
-    self:ScheduleMethod(45, "Lifebinder")
-end
--- Dravun's edit
-
 function mod:SPELL_CAST_START(args)
     if args:IsSpellID(62437, 62859) then
         specWarnTremor:Show()
@@ -95,6 +78,17 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
     if args:IsSpellID(62678) then -- Summon Allies of Nature
         timerAlliesOfNature:Start()
+    elseif args:IsSpellID(63571, 62589) then -- Nature's Fury
+        altIcon = not altIcon   --Alternates between Skull and X
+        self:SetIcon(args.destName, altIcon and 7 or 8, 10)
+        warnFury:Show(args.destName)
+        if args:IsPlayer() then -- only cast on players; no need to check destFlags
+            if self.Options.PlaySoundOnFury then
+                PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
+            end
+            specWarnFury:Show()
+        end
+        timerFury:Start(args.destName)
     end
 end
 
@@ -109,19 +103,9 @@ function mod:SPELL_AURA_APPLIED(args)
         else
             self:Schedule(0.5, showRootWarning)
         end
+
     elseif args:IsSpellID(62451, 62865) and args:IsPlayer() then
         specWarnBeam:Show()
-    elseif args:IsSpellID(63571, 62589) then -- Nature's Fury
-        altIcon = not altIcon   --Alternates between Skull and X
-        self:SetIcon(args.destName, altIcon and 7 or 8, 10)
-        warnFury:Show(args.destName)
-        if args:IsPlayer() then -- only cast on players; no need to check destFlags
-            if self.Options.PlaySoundOnFury then
-                PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
-            end
-            specWarnFury:Show()
-        end
-        timerFury:Start(args.destName)
     end 
 end
 
@@ -131,8 +115,6 @@ function mod:SPELL_AURA_REMOVED(args)
     elseif args:IsSpellID(62861, 62438) then
         self:RemoveIcon(args.destName)
         iconId = iconId + 1
-    elseif args:IsSpellID(63571, 62589) then
-        self:RemoveIcon(args.destName)
     end
 end
 
