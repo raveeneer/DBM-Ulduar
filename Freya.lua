@@ -39,6 +39,7 @@ local timerAlliesOfNature   = mod:NewNextTimer(60, 62678)
 local timerSimulKill        = mod:NewTimer(12, "TimerSimulKill")
 local timerFury             = mod:NewTargetTimer(10, 63571)
 local timerTremorCD         = mod:NewCDTimer(28, 62859)
+local timerEonarsGiftCD     = mod:NewCDTimer(45, 62584)
 
 mod:AddBoolOption("HealthFrame", true)
 mod:AddBoolOption("PlaySoundOnFury")
@@ -52,6 +53,8 @@ local iconId        = 6
 function mod:OnCombatStart(delay)
     enrage:Start()
     table.wipe(adds)
+    timerEonarsGiftCD:Start(30)
+    self:ScheduleMethod(30, "EonarsGift")
 end
 
 function mod:OnCombatEnd(wipe)
@@ -66,6 +69,11 @@ end
 local function showRootWarning()
     warnRoots:Show(table.concat(rootedPlayers, "< >"))
     table.wipe(rootedPlayers)
+end
+
+function mod:EonarsGift()
+    timerEonarsGiftCD:Start()
+    self:ScheduleMethod(45, "EonarsGift")
 end
 
 function mod:SPELL_CAST_START(args)
