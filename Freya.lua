@@ -40,13 +40,6 @@ local timerSimulKill        = mod:NewTimer(12, "TimerSimulKill")
 local timerFury             = mod:NewTargetTimer(10, 63571)
 local timerTremorCD         = mod:NewCDTimer(28, 62859)
 
--- Dravun's edit --
-local timerLifebinder       = mod:NewTimer(45, "Eonar's Gift")
-local timerAdds             = mod:NewTimer(60, "Next Wave")
---local timerBombs          = mod:NewTimer(18, "Bombs")
-local iWave                 = 0
--- Dravun's edit --
-
 mod:AddBoolOption("HealthFrame", true)
 mod:AddBoolOption("PlaySoundOnFury")
 
@@ -59,9 +52,6 @@ local iconId        = 6
 function mod:OnCombatStart(delay)
     enrage:Start()
     table.wipe(adds)
-    iWave = 0
-    timerAdds:Start(10)
-    self:ScheduleMethod(30, "Lifebinder")
 end
 
 function mod:OnCombatEnd(wipe)
@@ -77,13 +67,6 @@ local function showRootWarning()
     warnRoots:Show(table.concat(rootedPlayers, "< >"))
     table.wipe(rootedPlayers)
 end
-
--- Dravun's edit
-function mod:Lifebinder()
-    timerLifebinder:Start()
-    self:ScheduleMethod(45, "Lifebinder")
-end
--- Dravun's edit
 
 function mod:SPELL_CAST_START(args)
     if args:IsSpellID(62437, 62859) then
