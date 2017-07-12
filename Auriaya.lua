@@ -37,7 +37,7 @@ local enrageTimer		= mod:NewBerserkTimer(600)
 local timerDefender 	= mod:NewTimer(35, "timerDefender")
 local timerFear			= mod:NewCastTimer(64386)
 local timerNextFear 	= mod:NewNextTimer(40, 64386)
-local timerNextSwarm 	= mod:NewNextTimer(36, 64396)
+local timerNextSwarm 	= mod:NewNextTimer(48, 64396)
 local timerNextSonic 	= mod:NewNextTimer(55, 64688)
 local timerSonic		= mod:NewCastTimer(64688)
 
@@ -49,9 +49,9 @@ local catLives = 9
 function mod:OnCombatStart(delay)
 	catLives = 9
 	enrageTimer:Start(-delay)
-	timerNextFear:Start(35-delay) -- [r] 35
-	timerNextSonic:Start(50-delay) --[r] 50
-	timerDefender:Start(60-delay) -- [r] 65 
+	timerNextFear:Start(35-delay) 
+	timerNextSonic:Start(50-delay) 
+	timerDefender:Start(65-delay) 
 end
 
 function mod:SPELL_CAST_START(args)
