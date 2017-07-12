@@ -28,7 +28,7 @@ mod:AddBoolOption("AnnounceFails", false, "announce")
 local enrageTimer				= mod:NewBerserkTimer(369)
 local timerStormhammer			= mod:NewCastTimer(16, 62042)
 local timerLightningCharge	 	= mod:NewCDTimer(16, 62466) 
-local timerUnbalancingStrike	= mod:NewCastTimer(26, 62130)
+local timerUnbalancingStrike	= mod:NewCDTimer(20, 62130)
 local timerHardmode				= mod:NewTimer(175, "TimerHardmode", 62042)
 
 mod:AddBoolOption("RangeFrame")
