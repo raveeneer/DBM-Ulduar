@@ -38,7 +38,7 @@ local timerDefender 	= mod:NewTimer(35, "timerDefender")
 local timerFear			= mod:NewCastTimer(64386)
 local timerNextFear 	= mod:NewNextTimer(40, 64386)
 local timerNextSwarm 	= mod:NewNextTimer(36, 64396)
-local timerNextSonic 	= mod:NewNextTimer(27, 64688)
+local timerNextSonic 	= mod:NewNextTimer(55, 64688)
 local timerSonic		= mod:NewCastTimer(64688)
 
 mod:AddBoolOption("HealthFrame", true)
@@ -50,7 +50,7 @@ function mod:OnCombatStart(delay)
 	catLives = 9
 	enrageTimer:Start(-delay)
 	timerNextFear:Start(35-delay) -- [r] 35
-	timerNextSonic:Start(60-delay) --[r] 50
+	timerNextSonic:Start(50-delay) --[r] 50
 	timerDefender:Start(60-delay) -- [r] 65 
 end
 
