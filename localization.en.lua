@@ -165,7 +165,7 @@ L:SetGeneralLocalization{
 
 L:SetTimerLocalization{
 	NextCollapsingStar		= "Next Collapsing Star",
-	PossibleNextCosmicSmash	= "Next possible Cosmic Smash",
+	NextCosmicSmash			= "Next Cosmic Smash",
 	TimerCombatStart		= "Combat starts"
 }
 
@@ -180,14 +180,15 @@ L:SetOptionLocalization{
 	WarningPhasePunch		= "Announce Phase Punch targets",
 	NextCollapsingStar		= "Show timer for next Collapsing Star",
 	WarningCosmicSmash 		= "Show warning for Cosmic Smash",
-	PossibleNextCosmicSmash	= "Show timer for next possible Cosmic Smash",
+	NextCosmicSmash			= "Show timer for next Cosmic Smash",
 	TimerCombatStart		= "Show timer for start of combat",
 	WarnPhase2Soon			= "Show pre-warning for Phase 2 (at ~23%)",
 	warnStarLow				= "Show special warning when Collapsing Star is low (at ~25%)"
 }
 
 L:SetMiscLocalization{
-	YellPull				= "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+	--YellPull				= "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+	YellPull 				= "See your world through my eyes: A universe so vast as to be immeasurable - incomprehensible even to your greatest minds.",
 	YellKill				= "I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?",
 	Emote_CollapsingStar	= "%s begins to Summon Collapsing Stars!",
 	Phase2					= "Behold the tools of creation",
