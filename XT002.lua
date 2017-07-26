@@ -19,12 +19,13 @@ local warnGravityBomb				= mod:NewTargetAnnounce(64234, 3)
 
 local specWarnLightBomb				= mod:NewSpecialWarningYou(65121)
 local specWarnGravityBomb			= mod:NewSpecialWarningYou(64234)
-local specWarnConsumption			= mod:NewSpecialWarningMove(64206)--Hard mode void zone dropped by Gravity Bomb
+local specWarnConsumption			= mod:NewSpecialWarningMove(64206)	--Hard mode void zone dropped by Gravity Bomb
+local specWarnTTIn10Sec 			= mod:NewSpecialWarning("WarningTTIn10Sec", 3)
 
 local enrageTimer					= mod:NewBerserkTimer(420)
 local timerTympanicTantrumCast		= mod:NewCastTimer(62776)
 local timerTympanicTantrum			= mod:NewBuffActiveTimer(12, 62776)
-local timerTympanicTantrumCD		= mod:NewCDTimer(60, 62776)
+local timerTympanicTantrumCD		= mod:NewCDTimer(59, 62776)
 local timerHeart					= mod:NewCastTimer(30, 63849)
 local timerLightBomb				= mod:NewTargetTimer(9, 65121)
 local timerGravityBomb				= mod:NewTargetTimer(9, 64234)
@@ -32,6 +33,7 @@ local timerAchieve					= mod:NewAchievementTimer(205, 2937, "TimerSpeedKill")
 
 mod:AddBoolOption("SetIconOnLightBombTarget", true)
 mod:AddBoolOption("SetIconOnGravityBombTarget", true)
+mod:AddBoolOption("WarningTympanicTantrumIn10Sec", true)
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
@@ -53,8 +55,14 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(62775) and args.auraType == "DEBUFF" then	-- Tympanic Tantrum
 		timerTympanicTantrumCD:Start()
-		timerTympanicTantrum:Start()
-
+		if self.Options.WarningTympanicTantrumIn10Sec then
+			specWarnTTIn10Sec:Schedule(49)
+		end
+		if mod:IsDifficulty("heroic10") then
+			timerTympanicTantrum:Start(7)
+		else
+			timerTympanicTantrum:Start()
+		end
 	elseif args:IsSpellID(63018, 65121) then 	-- Light Bomb
 		if args:IsPlayer() then
 			specWarnLightBomb:Show()
@@ -74,7 +82,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnGravityBomb:Show(args.destName)
 		timerGravityBomb:Start(args.destName)
 	elseif args:IsSpellID(63849) then
+		timerTympanicTantrumCD:Stop()
 		timerHeart:Start()
+	elseif args:IsSpellID(64193, 65737) then				-- 1st Tympanic Tantrum on HM mode
+		timerHeart:Stop()
+		if self.Options.WarningTympanicTantrumIn10Sec then
+			specWarnTTIn10Sec:Schedule(54)
+		end
+		timerTympanicTantrumCD:Start(64)
 	end
 end
 

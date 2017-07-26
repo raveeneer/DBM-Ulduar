@@ -108,11 +108,13 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
+	WarningTTIn10Sec			= "Tympanic Tantrum in 10 sec."
 }
 
 L:SetOptionLocalization{
 	SetIconOnLightBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(65121),
-	SetIconOnGravityBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(64234)
+	SetIconOnGravityBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(64234),
+	WarningTympanicTantrumIn10Sec = "Show special pre-warning (10 sec.) for $spell:62776 "
 }
 
 --------------------
