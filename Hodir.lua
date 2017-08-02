@@ -28,18 +28,13 @@ local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 61968)
 local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 63512)
 local timerFlashFrCD		= mod:NewCDTimer(60, 61968)
-local timerAchieve			= mod:NewAchievementTimer(149, 3182, "TimerSpeedKill")
+local timerAchieve			= mod:NewAchievementTimer(179, 3182, "TimerSpeedKill")
 
 mod:AddBoolOption("SetIconOnStormCloud")
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
-	if mod:IsDifficulty("heroic10") then
-		timerAchieve:Start(179)
-	else
-		timerAchieve:Start()
-	end
 	timerFlashFrCD:Start(-delay)
 end
 
