@@ -127,7 +127,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-	WarningRuneofDeathIn10Sec = "RoD in 10 sec."
+	WarningRuneofDeathIn10Sec = "RoD in ~10 sec."
 }
 
 L:SetTimerLocalization{
@@ -153,7 +153,9 @@ L:SetMiscLocalization{
 	YellRunemasterMolgeimDied = "What have you gained from my defeat? You are no less doomed, mortals!",
 	YellRunemasterMolgeimDied2 = "The legacy of storms shall not be undone.",
 	YellStormcallerBrundirDied = "The power of the storm lives on...",
-	YellStormcallerBrundirDied2 = "You rush headlong into the maw of madness!"
+	YellStormcallerBrundirDied2 = "You rush headlong into the maw of madness!",
+	YellSteelbreakerDied = "My death only serves to hasten your demise.",
+	YellSteelbreakerDied2 = "Impossible!"
 }
 
 ----------------------------
@@ -189,7 +191,6 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	--YellPull				= "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
 	YellPull 				= "See your world through my eyes: A universe so vast as to be immeasurable - incomprehensible even to your greatest minds.",
 	YellKill				= "I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?",
 	Emote_CollapsingStar	= "%s begins to Summon Collapsing Stars!",
@@ -319,7 +320,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	YellPhase1	= "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	YellPhase2	= "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
+	YellPhase2	= "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
 	YellKill	= "Stay your arms! I yield!",
 	ChargeOn	= "Lightning Charge: %s",
 	Charge		= "Lightning Charge fails (this try): %s" 
@@ -417,14 +418,15 @@ L:SetOptionLocalization{
 	ShockBlastWarningInP4	= "Show special warning for $spell:63631 in Phase 4",
 	RangeFrame				= "Show range frame in Phase 1 (6 yards)",
 	SetIconOnNapalm			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(65026),
-	SetIconOnPlasmaBlast	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(62997)
+	SetIconOnPlasmaBlast	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(62997),
+	WarnFlamesIn5Sec 		= "Show special warning: Flames in 5 sec."
 }
 
 L:SetMiscLocalization{
 	MobPhase1		= "Leviathan Mk II",
 	MobPhase2		= "VX-001",
 	MobPhase3		= "Aerial Command Unit",
-	YellPull		= "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",	
+	YellPull		= "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember, that you kind of owe it to me after the mess you made with the XT-002.",	
 	YellHardPull	= "Self-destruct sequence initiated.",
 	YellPhase2		= "WONDERFUL! Positively marvelous results! Hull integrity at 98.9 percent! Barely a dent! Moving right along.",
 	YellPhase3		= "Thank you, friends! Your efforts have yielded some fantastic data! Now, where did I put-- oh, there it is.",

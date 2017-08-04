@@ -38,11 +38,7 @@ mod:AddBoolOption("WarningTympanicTantrumIn10Sec", true)
 function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
-	if mod:IsDifficulty("heroic10") then
-		timerTympanicTantrumCD:Start(35-delay)
-	else
-		timerTympanicTantrumCD:Start(50-delay)
-	end
+	timerTympanicTantrumCD:Start(60-delay)
 end
 
 function mod:SPELL_CAST_START(args)

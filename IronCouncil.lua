@@ -2,7 +2,7 @@ local mod	= DBM:NewMod("IronCouncil", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision(("$Revision: 4154 $"):sub(12, -3))
-mod:SetCreatureID(32927)
+mod:SetCreatureID(32927, 32867, 32857)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
 --mod:RegisterCombat("combat", 32867, 32927, 32857)
@@ -33,7 +33,7 @@ local warnChainlight			= mod:NewSpellAnnounce(64215, 1)
 local timerOverload				= mod:NewCastTimer(6, 63481)
 local timerLightningWhirl		= mod:NewCastTimer(5, 63483)
 local specwarnLightningTendrils	= mod:NewSpecialWarningRun(63486)
-local timerLightningTendrils	= mod:NewBuffActiveTimer(27, 63486)
+local timerLightningTendrils	= mod:NewBuffActiveTimer(18, 63486)
 local specwarnOverload			= mod:NewSpecialWarningRun(63481) 
 mod:AddBoolOption("AlwaysWarnOnOverload", true, "announce")
 mod:AddBoolOption("PlaySoundOnOverload", true)
@@ -59,7 +59,6 @@ local warnShieldofRunes			= mod:NewSpellAnnounce(63489, 2)
 local warnRuneofSummoning		= mod:NewSpellAnnounce(62273, 3)
 local specwarnRuneofDeath		= mod:NewSpecialWarningMove(63490)
 local timerRuneofPower			= mod:NewNextTimer(60, 61974)
-local timerRuneofDeath			= mod:NewNextTimer(35, 63490)
 local timerRuneofDeathCD		= mod:NewCDTimer(35, 63490)
 local warnRuneofDeathIn10Sec	= mod:NewSpecialWarning("WarningRuneofDeathIn10Sec", 3)
 mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
@@ -68,6 +67,9 @@ local enrageTimer				= mod:NewBerserkTimer(900)
 
 local disruptTargets = {}
 local disruptIcon = 7
+local runemasterAlive = true
+local brundirAlive = true
+local steelbreakerAlive = true
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start()
@@ -75,6 +77,9 @@ function mod:OnCombatStart(delay)
 	self:ScheduleMethod(30, "RuneOfPower")
 	table.wipe(disruptTargets)
 	disruptIcon = 7
+	runemasterAlive = true
+	brundirAlive = true
+	steelbreakerAlive = true
 end
 
 function mod:RuneOfPower()
@@ -99,8 +104,6 @@ function mod:SPELL_CAST_START(args)
 		warnSupercharge:Show()
 	elseif args:IsSpellID(63479, 61879) then	-- Chain light
 		warnChainlight:Show()
-	elseif args:IsSpellID(63483, 61915) then	-- LightningWhirl
-		timerLightningWhirl:Start()
 	elseif args:IsSpellID(61903, 63493) then	-- Fusion Punch
 		warnFusionPunch:Show()
 		timerFusionPunchCast:Start()
@@ -151,7 +154,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			if mod:IsDifficulty("heroic10") then
 				self:SetIcon(args.destName, 8, 60) -- skull for 60 seconds (until meltdown)
 			else
-				self:SetIcon(args.destName, 8, 25) -- skull for 35 seconds (until meltdown)
+				self:SetIcon(args.destName, 8, 25) -- skull for 25 seconds (until meltdown)
 			end
 		end
 	elseif args:IsSpellID(63486, 61887) then	-- Lightning Tendrils
@@ -160,6 +163,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.PlaySoundLightningTendrils then
 			PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 		end
+	elseif args:IsSpellID(63483, 61915) then	-- Lightning Whirl
+		timerLightningWhirl:Start()
 	elseif args:IsSpellID(61912, 63494) then	-- Static Disruption (Hard Mode)
 		disruptTargets[#disruptTargets + 1] = args.destName
 		if self.Options.SetIconOnStaticDisruption then 
@@ -175,21 +180,26 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L.YellRuneOfDeath or msg:find(L.YellRuneOfDeath)) then
 		timerRuneofDeathCD:Start()
 		warnRuneofDeathIn10Sec:Schedule(25)
-	elseif (msg == L.YellStormcallerBrundirDied or msg:find(L.YellStormcallerBrundirDied)) then --register first RoD timer
-		timerRuneofDeath:Start()
-		warnRuneofDeathIn10Sec:Schedule(25)
-	elseif (msg == L.YellStormcallerBrundirDied2 or msg:find(L.YellStormcallerBrundirDied2)) then --register first RoD timer
-		timerRuneofDeath:Start()
-		warnRuneofDeathIn10Sec:Schedule(25)
-	elseif (msg == L.YellRunemasterMolgeimDied or msg:find(L.YellRunemasterMolgeimDied)) then
-		timerRuneofDeath:Stop()
+	-- Steelbreaker dies
+	elseif (msg == L.YellSteelbreakerDied or msg:find(L.YellSteelbreakerDied) or msg == L.YellSteelbreakerDied2 or msg:find(L.YellSteelbreakerDied2)) then --register first RoD timer
+		steelbreakerAlive = false
+		if runemasterAlive and brundirAlive then
+			timerRuneofDeathCD:Start()
+			warnRuneofDeathIn10Sec:Schedule(25)
+		end
+	-- Brundir dies
+	elseif (msg == L.YellStormcallerBrundirDied or msg:find(L.YellStormcallerBrundirDied) or msg == L.YellStormcallerBrundirDied2 or msg:find(L.YellStormcallerBrundirDied2)) then --register first RoD timer
+		brundirAlive = false
+		if runemasterAlive and steelbreakerAlive then
+			timerRuneofDeathCD:Start()
+			warnRuneofDeathIn10Sec:Schedule(25)
+		end
+	-- Runemaster dies
+	elseif (msg == L.YellRunemasterMolgeimDied or msg:find(L.YellRunemasterMolgeimDied) or msg == L.YellRunemasterMolgeimDied2 or msg:find(L.YellRunemasterMolgeimDied2)) then
+		runemasterAlive = false
 		timerRuneofDeathCD:Stop()
-		self:Unschedule(warnRuneofDeathIn10Sec)
+		warnRuneofDeathIn10Sec:Cancel()
 		timerRuneofPower:Stop()
-	elseif (msg == L.YellRunemasterMolgeimDied2 or msg:find(L.YellRunemasterMolgeimDied2)) then
-		timerRuneofDeath:Stop()
-		timerRuneofDeathCD:Stop()
-		self:Unschedule(warnRuneofDeathIn10Sec)
-		timerRuneofPower:Stop()
+		self:UnscheduleMethod("RuneOfPower")
 	end
 end

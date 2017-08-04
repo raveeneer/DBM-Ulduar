@@ -52,10 +52,6 @@ local warned_preP2 = false
 local warned_star = false
 
 function mod:OnCombatStart(delay)
-	warned_preP2 = false
-	warned_star = false
-	timerCombatStart:Start()
-	self:ScheduleMethod(8-delay, "startTimers")
 end
 
 function mod:startTimers()
@@ -113,6 +109,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.Phase2 or msg:find(L.Phase2) then
 		timerNextCollapsingStar:Cancel()
 		warnPhase2:Show()
+	elseif (msg == L.YellPull or msg:find(L.YellPull)) then
+		warned_preP2 = false
+		warned_star = false
+		timerCombatStart:Start()
+		self:ScheduleMethod(8, "startTimers")
 	end
 end
 

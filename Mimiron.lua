@@ -63,6 +63,7 @@ mod:AddBoolOption("AutoChangeLootToFFA", true)
 mod:AddBoolOption("SetIconOnNapalm", true)
 mod:AddBoolOption("SetIconOnPlasmaBlast", true)
 mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("WarnFlamesIn5Sec", true)
 
 local hardmode = false
 local phase						= 0 
@@ -88,7 +89,8 @@ function mod:OnCombatStart(delay)
 	napalmShellIcon = 7
 	table.wipe(napalmShellTargets)
 	self:NextPhase()
-	timerPlasmaBlastCD:Start(30-delay) 
+	timerPlasmaBlastCD:Start(29.5-delay) -- [e] 30
+	timerProximityMines:Start(20) -- [e]
 	if DBM:GetRaidRank() == 2 then
 		lootmethod, _, masterlooterRaidID = GetLootMethod()
 	end
@@ -115,7 +117,9 @@ function mod:Flames()
 		timerNextFlames:Start()
 		self:ScheduleMethod(30, "Flames")
 		warnFlamesSoon:Schedule(20)
-		warnFlamesIn5Sec:Schedule(25) 
+		if self.Options.WarnFlamesIn5Sec then
+			warnFlamesIn5Sec:Schedule(25) 
+		end
 end
 
 function mod:BombBot()
@@ -330,8 +334,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerFlameSuppressant:Start()
 		timerNextFlames:Start(7)
 		self:ScheduleMethod(7, "Flames")
-		--warnFlamesSoon:Schedule(2)
-		warnFlamesIn5Sec:Schedule(2)
+		if self.Options.WarnFlamesIn5Sec then
+			warnFlamesIn5Sec:Schedule(2) 
+		end
 		timerNextShockblast:Start(37)
 	end
 end

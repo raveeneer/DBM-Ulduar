@@ -29,7 +29,7 @@ local enrageTimer				= mod:NewBerserkTimer(369)
 local timerStormhammer			= mod:NewCastTimer(16, 62042)
 local timerLightningCharge	 	= mod:NewCDTimer(16, 62466) 
 local timerUnbalancingStrike	= mod:NewCDTimer(20, 62130)
-local timerHardmode				= mod:NewTimer(175, "TimerHardmode", 62042)
+local timerHardmode				= mod:NewTimer(150, "TimerHardmode", 62042)
 
 mod:AddBoolOption("RangeFrame")
 
@@ -37,7 +37,6 @@ local lastcharge				= {}
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start()
-	timerHardmode:Start()
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(10)
 	end
@@ -72,10 +71,13 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(62042) then 					-- Storm Hammer
 		warnStormhammer:Show(args.destName)
 
+	elseif args:IsSpellID(62507) then				-- Touch of Dominion
+		timerHardmode:Start()
+
 	elseif args:IsSpellID(62130) then				-- Unbalancing Strike
 		warnUnbalancingStrike:Show(args.destName)
 		
-	elseif args:IsSpellID(62526, 62527) then	-- Runic Detonation
+	elseif args:IsSpellID(62526, 62527) then		-- Runic Detonation
 		self:SetIcon(args.destName, 8, 5)
 		warningBomb:Show(args.destName)
 	end
@@ -94,12 +96,18 @@ end
 
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.YellPhase2 and mod:LatencyCheck() then		-- Bossfight (tank and spank)
-		self:SendSync("Phase2")
+	if msg == L.YellPhase2 or msg:find(L.YellPhase2) then		-- Bossfight (tank and spank)
+		warnPhase2:Show()
+		enrageTimer:Stop()
+		timerHardmode:Stop()
+		enrageTimer:Start(300)
+	elseif msg == L.YellKill or msg:find(L.YellKill) then
+		enrageTimer:Stop()
 	end
 end
 
 local spam = 0
+
 function mod:SPELL_DAMAGE(args)
 	if args:IsSpellID(62017) then -- Lightning Shock
 		if bit.band(args.destFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) ~= 0
@@ -111,14 +119,5 @@ function mod:SPELL_DAMAGE(args)
 	elseif self.Options.AnnounceFails and args:IsSpellID(62466) and DBM:GetRaidRank() >= 1 and DBM:GetRaidUnitId(args.destName) ~= "none" and args.destName then
 		lastcharge[args.destName] = (lastcharge[args.destName] or 0) + 1
 		SendChatMessage(L.ChargeOn:format(args.destName), "RAID")
-	end
-end
-
-function mod:OnSync(event, arg)
-	if event == "Phase2" then
-		warnPhase2:Show()
-		enrageTimer:Stop()
-		timerHardmode:Stop()
-		enrageTimer:Start(300)
 	end
 end
