@@ -32,7 +32,7 @@ local timerNextSurgeofDarkness	= mod:NewBuffActiveTimer(62, 62662)
 local timerSaroniteVapors		= mod:NewNextTimer(30, 63322)
 local timerNextMarkOfTheFaceless = mod:NewNextTimer(40, 63276)
 local timerLifeLeech			= mod:NewTargetTimer(10, 63276)
-local timerHardmode				= mod:NewTimer(249, "hardmodeSpawn")
+local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn")
 
 mod:AddBoolOption("YellOnLifeLeech", true, "announce")
 mod:AddBoolOption("YellOnShadowCrash", true, "announce")
@@ -44,11 +44,7 @@ mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without sync
 
 function mod:OnCombatStart(delay)
 	timerEnrage:Start(-delay)
-	if mod:IsDifficulty("heroic10") then
-		timerHardmode:Start(189)
-	else
-		timerHardmode:Start(-delay)
-	end
+	timerHardmode:Start(-delay)
 	timerNextSurgeofDarkness:Start(-delay)
 	timerNextMarkOfTheFaceless:Start(20)
 end
