@@ -64,6 +64,7 @@ mod:AddBoolOption("SetIconOnNapalm", true)
 mod:AddBoolOption("SetIconOnPlasmaBlast", true)
 mod:AddBoolOption("RangeFrame")
 mod:AddBoolOption("WarnFlamesIn5Sec", true)
+mod:AddBoolOption("SoundWarnCountingFlames", true)
 
 local hardmode = false
 local phase						= 0 
@@ -118,8 +119,35 @@ function mod:Flames()	-- Flames
 	self:ScheduleMethod(30, "Flames")
 	warnFlamesSoon:Schedule(20)
 	if self.Options.WarnFlamesIn5Sec then
-		warnFlamesIn5Sec:Schedule(25) 
+		warnFlamesIn5Sec:Schedule(25)
 	end
+	if self.Options.SoundWarnCountingFlames then
+		self:ScheduleMethod(25, "ToFlames5")
+		self:ScheduleMethod(26, "ToFlames4")
+		self:ScheduleMethod(27, "ToFlames3")
+		self:ScheduleMethod(28, "ToFlames2")
+		self:ScheduleMethod(29, "ToFlames1")
+	end
+end
+-- SOUND FUNCTIONS
+function mod:ToFlames5()
+	PlaySoundFile("Interface\\AddOns\\DBM-Core\\sounds\\5.mp3", "Master")
+end
+
+function mod:ToFlames4()
+	PlaySoundFile("Interface\\AddOns\\DBM-Core\\sounds\\4.mp3", "Master")
+end
+
+function mod:ToFlames3()
+	PlaySoundFile("Interface\\AddOns\\DBM-Core\\sounds\\3.mp3", "Master")
+end
+
+function mod:ToFlames2()
+	PlaySoundFile("Interface\\AddOns\\DBM-Core\\sounds\\2.mp3", "Master")
+end
+
+function mod:ToFlames1()
+	PlaySoundFile("Interface\\AddOns\\DBM-Core\\sounds\\1.mp3", "Master")
 end
 
 function mod:BombBot()	-- Bomb Bot
@@ -320,6 +348,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:ScheduleMethod(7, "Flames")
 		if self.Options.WarnFlamesIn5Sec then
 			warnFlamesIn5Sec:Schedule(2) 
+		end
+		if self.Options.SoundWarnCountingFlames then
+			self:ScheduleMethod(2, "ToFlames5")
+			self:ScheduleMethod(3, "ToFlames4")
+			self:ScheduleMethod(4, "ToFlames3")
+			self:ScheduleMethod(5, "ToFlames2")
+			self:ScheduleMethod(6, "ToFlames1")
 		end
 		timerNextShockblast:Start(37)
 

@@ -419,7 +419,8 @@ L:SetOptionLocalization{
 	RangeFrame				= "Show range frame in Phase 1 (6 yards)",
 	SetIconOnNapalm			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(65026),
 	SetIconOnPlasmaBlast	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(62997),
-	WarnFlamesIn5Sec 		= "Show special warning: Flames in 5 sec."
+	WarnFlamesIn5Sec 		= "Show special warning: Flames in 5 sec.",
+	SoundWarnCountingFlames = "Play sound counter 5...1 to Flames"
 }
 
 L:SetMiscLocalization{
