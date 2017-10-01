@@ -24,7 +24,7 @@ local specWarnTTIn10Sec 			= mod:NewSpecialWarning("WarningTTIn10Sec", 3)
 
 local enrageTimer					= mod:NewBerserkTimer(600)
 local timerTympanicTantrumCast		= mod:NewCastTimer(62776)
-local timerTympanicTantrum			= mod:NewBuffActiveTimer(12, 62776)
+local timerTympanicTantrum			= mod:NewBuffActiveTimer(8, 62776)
 local timerTympanicTantrumCD		= mod:NewCDTimer(59, 62776)
 local timerHeart					= mod:NewCastTimer(30, 63849)
 local timerLightBomb				= mod:NewTargetTimer(9, 65121)
